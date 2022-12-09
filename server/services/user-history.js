@@ -1,11 +1,10 @@
-var HistoryRecord = require('../models/history-record')
+const HistoryRecord = require('../models/history-record')
 const ERROR_MESSAGE = 'Cannot fetch data from history-records table'
 const JourneyService = require('./journey');
 
 exports.getRecords = async () => {
     try {
-        let records = await HistoryRecord.find({})
-        return records;
+        return await HistoryRecord.find({});
     } catch (e) {
         throw Error(ERROR_MESSAGE)
     }
@@ -13,8 +12,7 @@ exports.getRecords = async () => {
 
 exports.getUserRecords = async (id) => {
     try {
-        let records = await HistoryRecord.find({userId: id})
-        return records;
+        return await HistoryRecord.find({userId: id});
     } catch (e) {
         throw Error(ERROR_MESSAGE)
     }

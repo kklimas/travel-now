@@ -29,9 +29,18 @@ exports.addJourney = async (req, res, next) => {
 exports.deleteJourney = async (req, res, next) => {
     let id = req.params.id;
     try {
-        let journey = await JourneyService.deleteJourney(id);
-        return res.status(204).json(journey);
+        await JourneyService.deleteJourney(id);
+        return res.status(204).json();
     } catch (e) {
         return res.status(404).json({ status: 400, message: e.message });
+    }
+}
+
+exports.buyJourneys = async (req, res, next) => {
+    try {
+        await JourneyService.buyJourneys(req.body);
+        return res.status(204).json();
+    } catch (e) {
+        return res.status(404).json({ status: 404, message: e.message });
     }
 }

@@ -1,19 +1,19 @@
 const Journey = require('../models/journey');
+const UserHistoryService = require('./user-history')
 const JourneyCommentService = require('./journey-comment');
 const ERROR_MESSAGE = 'Cannot fetch data from journeys table'
 
+
 exports.getJourneys = async () => {
     try {
-        let journeys = await Journey.find({});
-        return journeys;
+        return await Journey.find({});
     } catch {
         throw Error(ERROR_MESSAGE);
     }
 }
 exports.getJourney = async (id) => {
     try {
-        let journey = await Journey.findById(id);
-        return journey;
+        return await Journey.findById(id);
     } catch {
         throw Error(ERROR_MESSAGE);
     }
@@ -28,15 +28,33 @@ exports.addJourney = async (body) => {
     }
 }
 exports.deleteJourney = async (id) => {
-    try { 
-        let callback = Promise.all([
+    try {
+        return Promise.all([
             await Journey.deleteOne({_id: id}),
             JourneyCommentService.deleteCommentsByJourneyId(id)
         ]);
-        return callback;
     } catch {
         throw Error(ERROR_MESSAGE);
     }
+}
+exports.buyJourneys = async (items) => {
+    try {
+        const recordPromises = items.map(item => {
+            let record = {
+                userId: 0,
+                journeyId: item.journeyId,
+                tickets: item.count
+            }
+            return UserHistoryService.addRecord(record);
+        })
+
+        const singleItemBuyPromises = items.map(item => handleSingleItemBuy(item))
+
+        return Promise.all(recordPromises.concat(singleItemBuyPromises));
+    } catch {
+        throw Error(ERROR_MESSAGE);
+    }
+
 }
 exports.reduceTicketsOfJourney = async (id, tickets) => {
     try {
@@ -44,6 +62,16 @@ exports.reduceTicketsOfJourney = async (id, tickets) => {
         journey.ticketsLeft -= tickets;
         
         return await journey.save();
+    } catch {
+        throw Error(ERROR_MESSAGE);
+    }
+}
+const handleSingleItemBuy = async (item) => {
+    try {
+        let journey = await Journey.findById(item.journeyId);
+        journey.ticketsLeft -= item.count;
+        await journey.save()
+        return journey;
     } catch {
         throw Error(ERROR_MESSAGE);
     }

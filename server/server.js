@@ -1,8 +1,10 @@
+const cors = require("cors");
+
 const { config } = require("dotenv");
 config();
 
-const connect = require('./database/connect')
-connect();
+const DatabaseService = require('./database/database-handling')
+DatabaseService.connect();
 
 const express = require("express");
 const app = express();
@@ -10,10 +12,11 @@ const app = express();
 const journeys = require("./routes/journey");
 const comments = require("./routes/journey-comments");
 const historyRecords = require("./routes/user-history");
-const users = require('./routes/user');
-
+const users = require("./routes/user");
 
 const port = parseInt(process.env.SERVER_PORT);
+
+app.use(cors());
 
 // journeys
 app.use("/journeys", journeys);

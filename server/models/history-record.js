@@ -12,6 +12,10 @@ const HistoryRecordSchema = new mongoose.Schema({
     tickets: {
         type: Number,
         required: true
+    },
+    orderDate: {
+        type: Date,
+        default: Date.now()
     }
 })
 
