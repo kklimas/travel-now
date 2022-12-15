@@ -1,0 +1,21 @@
+h1 {
+    font-size: 2rem;
+    margin-bottom: 32px;
+    margin-top: 32px;
+}
+.box {
+    text-align: center;
+    padding: 16px;
+}
+.mt {
+    margin-top: 64px;
+}
+.flex-box {
+    text-align: left;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 32px;
+}

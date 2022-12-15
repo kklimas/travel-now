@@ -1,0 +1,54 @@
+<form [formGroup]="commentForm" (submit)="submit()">
+  <h1 mat-dialog-title>Add comment</h1>
+  <div class="input-box" mat-dialog-content>
+    <mat-form-field appearance="fill">
+      <mat-label>Username</mat-label>
+      <input formControlName="username" matInput />
+      <mat-error *ngIf="!username.invalid">Username is required</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Journey name</mat-label>
+      <input formControlName="journeyName" matInput />
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Stars</mat-label>
+      <mat-select formControlName="stars">
+        <mat-option [value]="i" *ngFor="let i of stars">
+          {{ i }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="!star.invalid">Field is required</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Date</mat-label>
+      <input matInput formControlName="date" [matDatepicker]="picker" />
+      <mat-datepicker-toggle
+        matIconSuffix
+        [for]="picker"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Comment</mat-label>
+      <textarea formControlName="comment" matInput></textarea>
+      <mat-error *ngIf="!comment.invalid">{{
+        getErrorMessage("comment")
+      }}</mat-error>
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions>
+    <button
+      [disabled]="commentForm.invalid"
+      type="submit"
+      [mat-dialog-close]="true"
+      mat-button
+      mat-dialog-close
+    >
+      Share
+    </button>
+    <button mat-button mat-dialog-close [mat-dialog-close]="false">
+      Close
+    </button>
+  </div>
+</form>

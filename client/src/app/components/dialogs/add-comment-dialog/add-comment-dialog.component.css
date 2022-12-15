@@ -1,0 +1,15 @@
+.input-box {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+form{
+  width: 400px;
+  padding: 16px 16px;
+}
+
+.rating {
+    margin-top: 8px;
+    margin-left: 12px;
+    min-height: 30px;
+  }

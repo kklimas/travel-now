@@ -1,0 +1,73 @@
+<mat-form-field>
+  <mat-label>Filter by status</mat-label>
+  <mat-select [(value)]="selected" (selectionChange)="filterByStatus()">
+    <mat-option [value]="NONE">None</mat-option>
+    <mat-option [value]="NOT_STARTED">Not started</mat-option>
+    <mat-option [value]="IN_PROGRESS">In progress</mat-option>
+    <mat-option [value]="ENDED">Ended</mat-option>
+  </mat-select>
+</mat-form-field>
+
+<div class="mat-elevation-z8">
+  <table mat-table [dataSource]="filteredRecords">
+    <ng-container matColumnDef="position">
+      <th mat-header-cell *matHeaderCellDef>No.</th>
+      <td mat-cell *matCellDef="let element; let index = index">
+        {{ index + 1 }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="journeyName">
+      <th
+        mat-header-cell
+        *matHeaderCellDef
+        sortActionDescription="Sort by journey"
+      >
+        Journey name
+      </th>
+      <td mat-cell *matCellDef="let element">{{ element.journeyName }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="startDate">
+      <th
+        mat-header-cell
+        *matHeaderCellDef
+        sortActionDescription="Sort by start date"
+      >
+        Start date
+      </th>
+      <td mat-cell *matCellDef="let element">{{ element.startDate | date }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="tickets">
+      <th
+        mat-header-cell
+        *matHeaderCellDef
+        sortActionDescription="Sort by tickets number"
+      >
+        Tickets
+      </th>
+      <td mat-cell *matCellDef="let element">{{ element.tickets }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef>Status</th>
+      <td mat-cell *matCellDef="let element">
+        <mat-chip [class]="element | statusColor" selected color="primary"
+          ><p>{{ element | statusText }}</p>
+        </mat-chip>
+      </td>
+    </ng-container>
+
+    <tr class="mat-row" *matNoDataRow>
+      <td [attr.colspan]="displayedColumns.length">No records were found</td>
+    </tr>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr
+      mat-row
+      (click)="switchTo(row)"
+      *matRowDef="let row; columns: displayedColumns"
+    ></tr>
+  </table>
+</div>

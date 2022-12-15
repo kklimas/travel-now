@@ -1,0 +1,56 @@
+.box {
+    padding: 48px;
+    margin-top: 48px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.summary {
+    width: 90vw;
+    display: flex;
+    justify-content: space-around;
+    height: 200px;
+    -webkit-box-shadow: 10px 10px 28px 0px rgba(186,186,186,1);
+    -moz-box-shadow: 10px 10px 28px 0px rgba(186,186,186,1);
+    box-shadow: 10px 10px 28px 0px rgba(186,186,186,1);
+    margin-bottom: 32px;
+    flex-direction: column;
+    padding: 16px;
+    text-align: center;
+    font-weight: bold;
+}
+.summary h1 {
+    font-size: 2rem;
+}
+button {
+    margin-top: 8px;
+    width: 200px;
+}
+mat-divider {
+    margin-bottom: 16px;
+}
+.summary p {
+    font-size: 1.5rem;
+}
+.sum-up {
+    font-weight: bold;
+    font-size: 1rem;
+    color: rgb(78, 78, 78);
+}
+
+p {
+    padding: 4px;
+}
+.red {
+    color: crimson;
+}
+.green {
+    color: green;
+}
+.flex-box {
+    width: 90%;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 16px;
+}

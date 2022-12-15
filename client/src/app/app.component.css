@@ -1,0 +1,42 @@
+div {
+    padding: 64px;
+    display: flex;
+    justify-content: space-between;
+    gap: 48px;
+}
+mat-sidenav-content {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+mat-toolbar {
+    padding: 16px 64px;
+    font-size: 2rem;
+    height: 70px;
+    display: flex;
+    justify-content: space-between;
+}
+mat-toolbar a {
+    color: white;
+    font-size: 1rem;
+    text-decoration: none;
+}
+mat-nav-list a  {
+    align-items: center;
+}
+.sidebar {
+    display: none;
+}
+
+@media screen and (max-width: 1000px) {
+    div {
+        padding: 64px 8px;
+    }
+    .sidebar {
+        display: inline-block;
+    }
+    .navbar {
+        display: none;
+    }
+}

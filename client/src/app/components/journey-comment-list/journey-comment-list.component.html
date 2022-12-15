@@ -1,0 +1,9 @@
+<div class="box" *ngIf="comments.length !== 0">
+  <h1>Comments</h1>
+  <div *ngIf="comments.length > 0" class="flex-box">
+    <app-journey-comment
+      *ngFor="let comment of comments"
+      [comment]="comment"
+    ></app-journey-comment>
+  </div>
+</div>

@@ -1,0 +1,41 @@
+mat-form-field {
+    margin-top: 48px;
+}
+table {
+    width: 80vw;
+}
+
+.mat-row {
+    height: 100px;
+    text-align: center;
+    font-size: 1.5rem;
+}
+
+p {
+    color: white;
+    margin-top: 12px;
+}
+.default p {
+    color: rgb(57, 56, 56);
+}
+.red {
+    background-color: crimson !important;
+}
+.blue {
+    background-color: blue !important;
+}
+
+.mat-mdc-row .mat-mdc-cell {
+    border-bottom: 1px solid transparent;
+    border-top: 1px solid transparent;
+    cursor: pointer;
+  }
+  
+  .mat-mdc-row:hover .mat-mdc-cell {
+    border-color: currentColor;
+  }
+  
+  .demo-row-is-clicked {
+    font-weight: bold;
+  }
+  

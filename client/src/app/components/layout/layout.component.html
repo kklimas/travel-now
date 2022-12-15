@@ -1,0 +1,48 @@
+<mat-toolbar color="primary">
+  <span>
+    <mat-icon>card_travel</mat-icon>
+    TravelNow
+  </span>
+  <div class="navbar">
+    <a routerLink="home">Home</a>
+    <a routerLink="journeys">Journeys</a>
+    <a routerLink="add-journey">Add journey</a>
+    <a routerLink="shopping-basket">Shopping basket</a>
+    <a routerLink="history">History</a>
+  </div>
+  <div class="sidebar">
+    <button (click)="sidenav.toggle()" mat-icon-button>
+      <mat-icon>menu</mat-icon>
+    </button>
+  </div>
+</mat-toolbar>
+<app-page-header></app-page-header>
+<mat-sidenav-container>
+  <mat-sidenav #sidenav>
+    <mat-nav-list>
+      <a (click)="sidenav.toggle()" routerLink="home" mat-list-item>
+        <mat-icon>home</mat-icon>
+        Home
+      </a>
+      <a (click)="sidenav.toggle()" routerLink="journeys" mat-list-item>
+        <mat-icon>terrain</mat-icon>
+        Journeys
+      </a>
+      <a (click)="sidenav.toggle()" routerLink="add-journey" mat-list-item>
+        <mat-icon>add</mat-icon>
+        Add journey
+      </a>
+      <a (click)="sidenav.toggle()" routerLink="shopping-basket" mat-list-item>
+        <mat-icon>shopping_cart</mat-icon>
+        Shopping basket
+      </a>
+      <a (click)="sidenav.toggle()" routerLink="history" mat-list-item>
+        <mat-icon>history</mat-icon>
+        History
+      </a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

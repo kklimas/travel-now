@@ -1,0 +1,20 @@
+<div class="box">
+  <div *ngIf="filteredJourneys.length > 0" class="flex-box mt">
+    <app-journey-card
+      (journeyDeleted)="getJourneys()"
+      [journey]="j"
+      [minCost]="minCost"
+      [maxCost]="maxCost"
+      *ngFor="let j of filteredJourneys | journeyFilter : filter"
+    ></app-journey-card>
+  </div>
+  <app-no-data-found *ngIf="filteredJourneys.length == 0"></app-no-data-found>
+  <div class="mt">
+    <app-journey-filter
+      (filterEvent)="filterChange($event)"
+      [countries]="countries"
+      [minCost]="minCost"
+      [maxCost]="maxCost"
+    ></app-journey-filter>
+  </div>
+</div>

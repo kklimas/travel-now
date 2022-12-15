@@ -1,0 +1,24 @@
+<mat-toolbar>
+  <span>{{ title }}</span>
+  <div class="summary">
+    <button
+      mat-icon-button
+      matTooltip="Basket cost: ${{ totalCost }} Tickets: {{ totalTickets }}"
+      matTooltipClass="multiline-tooltip"
+      routerLink="/shopping-basket"
+    >
+      <mat-icon>shopping_basket</mat-icon>
+    </button>
+    <button
+      *ngIf="isJourneyNear"
+      matTooltip="You have incoming journeys!"
+      mat-icon-button
+      routerLink="/history"
+    >
+      <mat-icon class="alert">add_alert</mat-icon>
+    </button>
+    <button matTooltip="User details" mat-icon-button>
+      <mat-icon>supervised_user_circle</mat-icon>
+    </button>
+  </div>
+</mat-toolbar>

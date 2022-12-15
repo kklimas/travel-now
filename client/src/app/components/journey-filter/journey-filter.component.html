@@ -1,0 +1,52 @@
+<form class="box" [formGroup]="filterForm">
+  <div class="inputs">
+    <mat-form-field>
+      <mat-label>Search</mat-label>
+      <input matInput formControlName="query" />
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Start date</mat-label>
+      <input formControlName="startDate" [min]="minStartDate" [max]="maxDate" matInput [matDatepicker]="startDate" />
+      <mat-datepicker-toggle matIconSuffix [for]="startDate"></mat-datepicker-toggle>
+      <mat-datepicker #startDate></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>End date</mat-label>
+      <input formControlName="endDate" [min]="minEndDate" matInput [matDatepicker]="endDate" />
+      <mat-datepicker-toggle matIconSuffix [for]="endDate"></mat-datepicker-toggle>
+      <mat-datepicker #endDate></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Countries</mat-label>
+      <mat-select formControlName="countries" multiple>
+        <mat-option *ngFor="let c of countries" [value]="c | lowercase">{{
+          c
+          }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Stars</mat-label>
+      <mat-select formControlName="stars" multiple>
+        <mat-option *ngFor="let s of stars" [value]="s">
+          <div *ngIf="s == 0">No rating</div>
+          <div *ngIf="s != 0">
+            {{s}}
+          </div>
+        </mat-option>
+      </mat-select> 
+    </mat-form-field>
+    <mat-form-field appearance="fill" floatLabel="always">
+      <mat-label>Min cost</mat-label>
+      <input formControlName="minCost" [min]="minCost" [max]="maxCost" [value]="minCost" matInput type="number" class="right-align">
+      <span matTextPrefix>$&nbsp;</span>
+    </mat-form-field>
+    <mat-form-field appearance="fill" floatLabel="always">
+      <mat-label>Max cost</mat-label>
+      <input formControlName="maxCost" [min]="minCost" [max]="maxCost" [value]="maxCost" matInput type="number" class="right-align">
+      <span matTextPrefix>$&nbsp;</span>
+    </mat-form-field>
+  </div>
+  <button class="clearBtn" mat-raised-button color="primary" (click)="clearFilters()">
+    Clear filters
+  </button>
+</form>

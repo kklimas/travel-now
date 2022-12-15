@@ -1,0 +1,46 @@
+<mat-card class="card">
+  <mat-card-header>
+    <mat-card-title-group>
+      <div *ngIf="!basketItem.isActive" class="warn">
+        <mat-icon matTooltip="Cannot find item.">warning </mat-icon>
+      </div>
+      <mat-card-title>{{ basketItem.name | uppercase }}</mat-card-title>
+      <mat-card-subtitle
+        >Start date:
+        <span>{{ basketItem.startDate | date }}</span></mat-card-subtitle
+      >
+      <mat-card-subtitle
+        >End date:
+        <span>{{ basketItem.endDate | date }}</span></mat-card-subtitle
+      >
+      <div class="col">
+        <mat-card-subtitle
+          >Cost per unit: <span>${{ basketItem.costPerUnit }}</span>
+        </mat-card-subtitle>
+        <mat-card-subtitle
+          >Tickets: <span>{{ basketItem.count }}</span>
+        </mat-card-subtitle>
+      </div>
+
+      <mat-card-subtitle class="sum-up"
+        ><span
+          >Total cost: ${{ basketItem.count * basketItem.costPerUnit }}</span
+        >
+      </mat-card-subtitle>
+    </mat-card-title-group>
+  </mat-card-header>
+  <mat-card-actions>
+    <div class="action-box">
+      <div>
+        <button
+          (click)="removeItemFromBasket()"
+          mat-button
+          matTooltip="Remove from basket"
+          color="warn"
+        >
+          REMOVE
+        </button>
+      </div>
+    </div>
+  </mat-card-actions>
+</mat-card>

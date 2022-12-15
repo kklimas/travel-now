@@ -1,0 +1,166 @@
+.box {
+  padding: 48px;
+  margin-top: 48px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.item-1 {
+  padding: 4px 12px;
+  border-radius: 10px;
+  height: 30px;
+}
+p {
+  font-size: 1.2rem;
+  font-weight: 500;
+  line-height: 32px;
+}
+.summary {
+  width: 90vw;
+  min-height: 400px;
+  display: flex;
+  justify-content: space-around;
+  -webkit-box-shadow: 10px 10px 28px 0px rgba(186,186,186,1);
+  -moz-box-shadow: 10px 10px 28px 0px rgba(186,186,186,1);
+  box-shadow: 10px 10px 28px 0px rgba(186,186,186,1);
+  margin-bottom: 32px;
+  flex-direction: column;
+  padding: 16px;
+  font-weight: bold;
+}
+mat-divider {
+  margin-bottom: 24px;
+}
+.summary h1 {
+  font-size: 2rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.data {
+  display: flex;
+  width: 100%;
+  gap: 16px;
+  justify-content: space-around;
+}
+
+img {
+  border-radius: 20px;
+  width: 50vw;
+}
+span {
+  font-weight: bold;
+}
+.rating mat-icon {
+    color: gold;
+  }
+
+mat-card-title-group img {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  border: 3px solid rgb(141, 141, 141);
+}
+.card-img {
+  width: 100%;
+  margin-top: 32px;
+  height: auto;
+}
+.rating {
+  margin-top: 16px;
+  min-height: 30px;
+  margin-bottom: 24px;
+}
+.rating mat-icon {
+  color: gold;
+}
+.red {
+  background-color: crimson;
+  color: white;
+}
+.green {
+  background-color: green;
+  color: white;
+}
+.gray {
+  background-color: rgb(111, 111, 111);
+  color: white;
+}
+.back-btn {
+  margin-bottom: 32px;
+}
+mat-card-subtitle:nth-child(3) {
+  margin-top: 24px;
+}
+mat-card-subtitle:nth-child(5) {
+  margin-top: 24px;
+}
+mat-card-subtitle span {
+  font-weight: bold;
+}
+mat-card-content {
+  margin-top: 32px;
+}
+mat-card-actions {
+  margin-top: 24px;
+}
+mat-card-actions .action-box {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.rating {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+.note {
+  display: flex;
+  gap: 8px;
+}
+
+.card-actions {
+  display: flex;
+  gap: 8px;
+}
+.desc {
+  padding: 0 64px;
+}
+.photo {
+  height: 100%;
+}
+.photo-box {
+  display: flex;
+}
+.photo-action {
+  width: 50vw;
+  display: flex;
+  justify-content: center;
+}
+
+@media screen and (max-width: 1000px) {
+  p {
+    font-size: 1rem;
+    line-height: normal;
+  }
+  .desc {
+    padding: 0 32px;
+  }
+  .photo-box {
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+  }
+  .photo {
+    display: flex;
+    flex-direction: column;
+  }
+  img {
+    margin: 0 auto;
+    width: 80vw;
+  }
+  .photo-action {
+    margin: 0 auto;
+  }
+}

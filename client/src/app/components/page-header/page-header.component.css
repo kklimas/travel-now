@@ -1,0 +1,43 @@
+
+
+mat-toolbar {
+    padding: 0 64px;
+    height: 100px;
+    display: flex;
+    justify-content: space-between;
+}
+.multiline-tooltip{
+    white-space: pre-line !important;
+  }
+span {
+    font-size: 3rem;
+}
+.alert {
+    color: green;
+}
+.summary {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 24px;
+    margin-right: 64px;
+}
+p {
+    font-size: 1rem;
+    margin-bottom: -8px;
+}
+@media screen and (max-width: 1000px) {
+    mat-toolbar {
+        padding: 0 32px;
+        height: 100px;
+        display: flex;
+        justify-content: space-between;
+    }
+    .summary {
+        margin-right: 24px;
+        gap: 8px;
+    }
+    span {
+        font-size: 2rem;
+    }
+}

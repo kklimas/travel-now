@@ -1,0 +1,140 @@
+.flex-box {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 48px;
+  padding: 48px;
+  margin-top: 48px;
+}
+mat-spinner {
+  margin-top: 128px;
+}
+.business-card {
+  position: relative;
+  width: 100%;
+  height: 600px;
+  background-color: rgb(91, 141, 206);
+}
+.business-card::before {
+  content: ' ';
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.6;
+  background-image: url('/assets/images/bg.jpg');
+  background-repeat: no-repeat;
+  background-position: 50% 0;
+  background-size: cover;
+  box-shadow: 10px 10px 28px 0px rgba(186, 186, 186, 1);
+  -webkit-box-shadow: 10px 10px 28px 0px rgba(186, 186, 186, 1);
+  -moz-box-shadow: 10px 10px 28px 0px rgba(186, 186, 186, 1);
+}
+.info {
+  position: absolute;
+  right: 10%;
+  top: 50px;
+  color: rgb(28, 85, 154);
+}
+.info h2 {
+  font-size: 2.5rem;
+}
+.info h3 {
+  margin-top: -10px;
+  font-size: 1.3rem;
+}
+.contact {
+  margin-top: 64px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-weight: bold;
+}
+.contact .record {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.address {
+  margin-top: 32px;
+  font-weight: bold;
+  font-size: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.address p {
+  margin-top: 0px !important;
+  margin-bottom: 0px !important;
+}
+.box {
+  width: 400px;
+  box-shadow: 10px 10px 28px 0px rgba(186, 186, 186, 1);
+  -webkit-box-shadow: 10px 10px 28px 0px rgba(186, 186, 186, 1);
+  -moz-box-shadow: 10px 10px 28px 0px rgba(186, 186, 186, 1);
+  border-radius: 4px;
+  padding: 32px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.map {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+}
+.box h1 {
+  font-size: 2rem;
+}
+.page {
+  height: 500px;
+  width: 100%;
+}
+.mapouter {
+  position: relative;
+  text-align: right;
+  width: 400px;
+  height: 400px;
+}
+.gmap_canvas {
+  overflow: hidden;
+  background: none !important;
+  width: 400px;
+  height: 400px;
+}
+.gmap_iframe {
+  width: 400px !important;
+  height: 400px !important;
+}
+p {
+  margin-top: 16px;
+  margin-bottom: 32px;
+}
+p span {
+  font-weight: bold;
+}
+img {
+  border-radius: 50%;
+  width: 300px;
+  height: 300px;
+  border: 3px solid rgb(186, 186, 186)
+}
+.actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+}
+.links {
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.links a {
+  font-size: 1.4rem;
+}

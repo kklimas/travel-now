@@ -1,0 +1,95 @@
+<mat-card
+  [ngClass]="{
+    card: true,
+    expensive: journey.cost === maxCost,
+    cheap: journey.cost === minCost
+  }"
+>
+  <mat-card-header>
+    <mat-card-title-group>
+      <mat-card-title>{{ journey.name | uppercase }}</mat-card-title>
+      <mat-card-subtitle>{{ journey.country | uppercase }}</mat-card-subtitle>
+      <mat-card-subtitle
+        ><span>Start date: </span>
+        {{ journey.startDate | date }}</mat-card-subtitle
+      >
+      <mat-card-subtitle
+        ><span>End date: </span> {{ journey.endDate | date }}</mat-card-subtitle
+      >
+      <mat-card-subtitle
+        ><span>Cost: ${{ journey.cost }}</span>
+      </mat-card-subtitle>
+      <mat-card-subtitle
+        [ngClass]="{
+          'no-tickets': journey.ticketsLeft < 6
+        }"
+        ><span>Tickets left: {{ journey.ticketsLeft }}</span>
+      </mat-card-subtitle>
+      <mat-card-subtitle>
+        <span
+          [ngClass]="{
+            reservated: true,
+            red: ticketsInBasket < 10,
+            green: ticketsInBasket > 9
+          }"
+          >Reservated: {{ ticketsInBasket }}
+        </span>
+      </mat-card-subtitle>
+      <img *ngIf="!isSmallWidth" mat-card-xl-image [src]="journey.urls[0]" />
+    </mat-card-title-group>
+  </mat-card-header>
+  <div class="rating">
+    <mat-icon *ngFor="let i of array(journey.stars)">star</mat-icon>
+  </div>
+  <img
+    class="card-img"
+    *ngIf="isSmallWidth"
+    mat-card-xl-image
+    [src]="journey.urls[0]"
+  />
+  <mat-card-content>
+    {{ journey.description }}
+  </mat-card-content>
+  <mat-card-actions>
+    <div class="action-box">
+      <div>
+        <button
+          [disabled]="!canAdd"
+          (click)="addTicketToBasket()"
+          mat-button
+          matTooltip="Add ticket to shopping basket"
+        >
+          ADD
+        </button>
+        <button
+          [disabled]="!canRemove"
+          (click)="removeTicketFromBasket()"
+          mat-button
+          matTooltip="Remove ticket from shopping basket"
+        >
+          REMOVE
+        </button>
+      </div>
+      <div class="card-actions">
+        <button
+          mat-icon-button
+          [matMenuTriggerFor]="menu"
+          matTooltip="Details"
+          aria-label="Details icon"
+        >
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button routerLink="{{ journey._id }}" mat-menu-item>
+            <mat-icon>dialpad</mat-icon>
+            <span>Details</span>
+          </button>
+          <button (click)="openDeleteDialog()" mat-menu-item>
+            <mat-icon class="delete">delete</mat-icon>
+            <span class="delete">Delete journey</span>
+          </button>
+        </mat-menu>
+      </div>
+    </div>
+  </mat-card-actions>
+</mat-card>
