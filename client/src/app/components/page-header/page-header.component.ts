@@ -32,8 +32,13 @@ export class PageHeaderComponent {
   private handlePathChange() {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
+        console.log(event.url);
+        
         switch (event.url) {
-          case "/home" || "":
+          case "/":
+            this.title = "Home";
+            break;
+          case "/home":
             this.title = "Home";
             break;
           case "/journeys":

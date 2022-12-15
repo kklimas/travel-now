@@ -76,11 +76,13 @@ export class JourneyCardComponent implements OnInit {
     this.checkIfCanRemove();
     this.ticketsInBasket = this.itemsInBasket();
   }
-
-  checkIfCanAdd() {
+  isTooLate() {
     let currentDate = new Date();
     let jDate = new Date(this.journey.startDate)
-    this.canAdd = this.journey.ticketsLeft > 0 && (jDate.getTime() > currentDate.getTime());
+    return jDate.getTime() < currentDate.getTime();
+  }
+  checkIfCanAdd() {
+    this.canAdd = this.journey.ticketsLeft > 0 && !this.isTooLate();
   }
   checkIfCanRemove() {
     this.canRemove = this.shoppingBasketService.canRemove(this.journey._id);

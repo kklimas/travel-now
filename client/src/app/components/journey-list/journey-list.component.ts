@@ -63,9 +63,12 @@ export class JourneyListComponent {
   private markJourneys() {
     let min = Infinity;
     let max = 0;
-    this.filteredJourneys.forEach(j => {      
-      if (j.cost > max) max = j.cost;
-      if (j.cost < min) min = j.cost;
+    let currentDate = new Date();
+    this.filteredJourneys.forEach(j => {
+      if (currentDate.getTime() <= (new Date(j.startDate).getTime())){
+        if (j.cost > max) max = j.cost;
+        if (j.cost < min) min = j.cost;
+      }      
     });
     this.maxCost = max;
     this.minCost = min;

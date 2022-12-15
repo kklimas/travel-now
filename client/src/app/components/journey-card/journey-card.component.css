@@ -36,6 +36,7 @@
 .cheap {
   border: 3px solid crimson;
 }
+
 mat-card-title-group img {
   width: 200px;
   height: 200px;
@@ -63,6 +64,9 @@ mat-card-subtitle:nth-child(5) {
 }
 mat-card-subtitle span {
   font-weight: bold;
+}
+.warn {
+  color: crimson;
 }
 mat-card-content {
   margin-top: 32px;

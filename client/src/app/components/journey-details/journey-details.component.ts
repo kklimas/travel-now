@@ -57,6 +57,11 @@ export class JourneyDetailsComponent {
       error: () => this.toastService.showError(),
     });
   }
+  isTooLate() {
+    let currentDate = new Date();
+    let jDate = new Date(this.journey.startDate)
+    return jDate.getTime() < currentDate.getTime();
+  }
   private getComments(id: string) {
     this.commentsService.getComments(id).subscribe({
       next: (comments) => {

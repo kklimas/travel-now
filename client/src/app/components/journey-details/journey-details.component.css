@@ -10,6 +10,9 @@
   border-radius: 10px;
   height: 30px;
 }
+.warn {
+  color: crimson;
+}
 p {
   font-size: 1.2rem;
   font-weight: 500;

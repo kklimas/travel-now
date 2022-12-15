@@ -1,5 +1,8 @@
 <div class="box">
   <div class="summary">
+    <div *ngIf="isTooLate()" class="warn">
+      <mat-icon class="warn" matTooltip="This journey expired">info</mat-icon>
+    </div>
     <h1>
       <span>{{ journey.name }}</span> details
     </h1>

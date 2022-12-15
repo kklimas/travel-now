@@ -5,6 +5,10 @@
     cheap: journey.cost === minCost
   }"
 >
+  <div *ngIf="isTooLate()" class="warn">
+    <mat-icon class="warn" matTooltip="This journey expired">info</mat-icon>
+  </div>
+
   <mat-card-header>
     <mat-card-title-group>
       <mat-card-title>{{ journey.name | uppercase }}</mat-card-title>
