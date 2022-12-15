@@ -29,8 +29,8 @@ const JourneySchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    img: {
-        type: String,
+    urls: {
+        type: [String],
         required: true
     },
     stars: {

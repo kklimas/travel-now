@@ -5,7 +5,7 @@ const JourneyCommentSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    userId: {
+    username: {
         type: String,
         required: false
     },
@@ -17,6 +17,13 @@ const JourneyCommentSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
+    userDate: {
+        type: Date
+    },
+    addDate: {
+        type: Date,
+        default: Date.now()
+    }
 })
 
 const JourneyComment = mongoose.model("JourneyComment", JourneyCommentSchema);
