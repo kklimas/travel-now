@@ -1,3 +1,5 @@
 #!/bin/bash
-STRING="Hello World!"
-echo $STRING
+
+# run server && application gui
+# if using linux type ./run.sh in terminal
+cd ./server && npm run dev & cd ./client && ng serve --open
