@@ -1,6 +1,6 @@
 const {config} = require("dotenv");
 const mongoose = require("mongoose");
-const Journey = require("../models/journey");
+const logger = require("../utils/logger")
 config();
 
 const username = process.env.DATABASE_USERNAME;
@@ -18,5 +18,5 @@ exports.connect = () => {
 
 db.on("error", console.error.bind(console, "connection error: "));
 db.once("open", function () {
-    console.log("Connected successfully to database");
+    logger.info("Connected successfully to database")
 });

@@ -1,6 +1,6 @@
 const JourneyCommentService = require('../services/journey-comment');
 
-exports.getComments = async (req, res, next) => {
+exports.getComments = async (req, res) => {
     try {
         let comments = await JourneyCommentService.getComments();
         return res.status(200).json(comments);
@@ -8,7 +8,7 @@ exports.getComments = async (req, res, next) => {
         return res.status(400).json({ status: 400, message: e.message });
     }
 }
-exports.getCommentsByUserId = async (req, res, next) => {
+exports.getCommentsByUserId = async (req, res) => {
     let id = req.params.id;
     try {
         let comments = await JourneyCommentService.getCommentsByUserId(id);
@@ -17,7 +17,7 @@ exports.getCommentsByUserId = async (req, res, next) => {
         return res.status(404).json({ status: 400, message: e.message });
     }
 }
-exports.addComment = async (req, res, next) => {
+exports.addComment = async (req, res) => {
     let body = req.body;
     try {
         let comment = await JourneyCommentService.addComment(body);
@@ -26,7 +26,7 @@ exports.addComment = async (req, res, next) => {
         return res.status(400).json({ status: 400, message: e.message });
     }
 }
-exports.deleteComment = async (req, res, next) => {
+exports.deleteComment = async (req, res) => {
     let id = req.params.id;
     try {
         let comment = await JourneyCommentService.deleteComment(id);

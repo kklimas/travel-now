@@ -11,6 +11,7 @@ exports.getJourneys = async () => {
         throw Error(ERROR_MESSAGE);
     }
 }
+
 exports.getJourney = async (id) => {
     try {
         return await Journey.findById(id);
@@ -18,6 +19,7 @@ exports.getJourney = async (id) => {
         throw Error(ERROR_MESSAGE);
     }
 }
+
 exports.addJourney = async (body) => {
     let journey = Journey(body);
     try {
@@ -27,6 +29,7 @@ exports.addJourney = async (body) => {
         throw Error(ERROR_MESSAGE);
     }
 }
+
 exports.deleteJourney = async (id) => {
     try {
         return Promise.all([
@@ -37,6 +40,7 @@ exports.deleteJourney = async (id) => {
         throw Error(ERROR_MESSAGE);
     }
 }
+
 exports.buyJourneys = async (items) => {
     try {
         const recordPromises = items.map(item => {
@@ -56,6 +60,15 @@ exports.buyJourneys = async (items) => {
     }
 
 }
+
+exports.modify = async (journey) => {
+    try {
+        return await Journey.update({_id: journey._id}, journey)
+    } catch (e) {
+        throw new Error(e)
+    }
+}
+
 exports.reduceTicketsOfJourney = async (id, tickets) => {
     try {
         let journey = await Journey.findById(id);

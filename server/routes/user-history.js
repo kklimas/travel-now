@@ -8,6 +8,6 @@ router.get("/", UserHistoryController.getRecords);
 
 router.get("/:id", UserHistoryController.getUserRecords);
 
-router.post("/", jsonParser, UserHistoryController.addRecord);
+// router.post("/", jsonParser, UserHistoryController.addRecord);
 
 module.exports = router;

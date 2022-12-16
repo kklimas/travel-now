@@ -4,16 +4,14 @@ const ERROR_MESSAGE = 'Cannot fetch data from journey-comments table'
 
 exports.getComments = async () => {
     try {
-        let comments = await JourneyComment.find({});
-        return comments;
+        return await JourneyComment.find({});
     } catch {
         throw Error(ERROR_MESSAGE);
     }
 }
 exports.getCommentsByUserId = async (id) => {
     try {
-        let comments = await JourneyComment.findById({userId: id});
-        return comments;
+        return await JourneyComment.findById({userId: id});
     } catch {
         throw Error(ERROR_MESSAGE);
     }
@@ -28,17 +26,15 @@ exports.addComment = async (body) => {
     }
 }
 exports.deleteComment = async (id) => {
-    try { 
-        let comment = await JourneyComment.deleteOne({_id: id});
-        return comment;
+    try {
+        return await JourneyComment.deleteOne({_id: id});
     } catch {
         throw Error(ERROR_MESSAGE);
     }
 }
 exports.deleteCommentsByJourneyId = async (id) => {
-    try { 
-        let comments = await JourneyComment.deleteMany({journeyId: id});
-        return comments;
+    try {
+        return await JourneyComment.deleteMany({journeyId: id});
     } catch {
         throw Error(ERROR_MESSAGE);
     }
