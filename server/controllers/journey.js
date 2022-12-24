@@ -18,9 +18,9 @@ exports.getJourney = async (req, res) => {
     }
 }
 exports.addJourney = async (req, res) => {
-    let body = req.body;
+    let trip = req.body.data;
     try {
-        let journey = await JourneyService.addJourney(body);
+        let journey = await JourneyService.addJourney(trip);
         return res.status(201).json(journey);
     } catch (e) {
         return res.status(400).json({ status: 400, message: e.message });
@@ -41,7 +41,7 @@ exports.buyJourneys = async (req, res) => {
         await JourneyService.buyJourneys(req.body);
         return res.status(204).json();
     } catch (e) {
-        return res.status(404).json();
+        return res.status(404).json({message: e});
     }
 }
 

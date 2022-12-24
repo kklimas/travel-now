@@ -1,4 +1,5 @@
 const JourneyComment = require('../models/journey-comment');
+const {Error} = require("mongoose");
 
 const ERROR_MESSAGE = 'Cannot fetch data from journey-comments table'
 
@@ -16,20 +17,24 @@ exports.getCommentsByUserId = async (id) => {
         throw Error(ERROR_MESSAGE);
     }
 }
-exports.addComment = async (body) => {
-    let comment = JourneyComment(body);
+exports.addComment = async (data) => {
     try {
+        let comment = JourneyComment(data);
         await comment.save();
         return comment;
     } catch {
         throw Error(ERROR_MESSAGE);
     }
 }
-exports.deleteComment = async (id) => {
+exports.deleteComment = async (id, user) => {
     try {
-        return await JourneyComment.deleteOne({_id: id});
-    } catch {
-        throw Error(ERROR_MESSAGE);
+        const commentToDel = await JourneyComment.findById(id);
+        if (!commentToDel || (commentToDel.username !== user.username && user.role > 1)) {
+            throw  Error("Comment does not belong to user")
+        }
+        return await JourneyComment.deleteOne({_id: id, username: user.username});
+    } catch (e){
+        throw Error(e);
     }
 }
 exports.deleteCommentsByJourneyId = async (id) => {

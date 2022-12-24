@@ -9,9 +9,9 @@ exports.getRecords = async (req, res) => {
     }
 }
 exports.getUserRecords = async (req, res) => {
-    let id = req.params.id;
+    let username = req.body.user.username;
     try {
-        let records = await UserHistoryService.getUserRecords(id);
+        let records = await UserHistoryService.getUserRecords(username);
         return res.status(200).json(records);
     } catch (e) {
         return res.status(404).json({ status: 400, message: e.message });

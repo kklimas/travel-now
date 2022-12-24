@@ -1,7 +1,7 @@
 const Journey = require('../models/journey');
 const UserHistoryService = require('./user-history')
 const JourneyCommentService = require('./journey-comment');
-const ERROR_MESSAGE = 'Cannot fetch data from journeys table'
+const ERROR_MESSAGE = 'Cannot fetch data from journeys table';
 
 
 exports.getJourneys = async () => {
@@ -41,11 +41,13 @@ exports.deleteJourney = async (id) => {
     }
 }
 
-exports.buyJourneys = async (items) => {
+exports.buyJourneys = async (order) => {
+    console.log(order)
+    let items = order.data;
     try {
         const recordPromises = items.map(item => {
             let record = {
-                userId: 0,
+                username: order.user.username,
                 journeyId: item.journeyId,
                 tickets: item.count
             }
@@ -55,10 +57,9 @@ exports.buyJourneys = async (items) => {
         const singleItemBuyPromises = items.map(item => handleSingleItemBuy(item))
 
         return Promise.all(recordPromises.concat(singleItemBuyPromises));
-    } catch {
+    } catch (e) {
         throw Error(ERROR_MESSAGE);
     }
-
 }
 
 exports.modify = async (journey) => {

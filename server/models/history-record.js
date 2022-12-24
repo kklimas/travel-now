@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 
 const HistoryRecordSchema = new mongoose.Schema({
-    userId: {
+    username: {
         type: String,
-        required: false
+        required: true
     },
     journeyId: {
         type: String,

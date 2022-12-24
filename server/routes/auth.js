@@ -10,6 +10,6 @@ router.post('/register', jsonParser, AuthController.register)
 
 router.post('/login', jsonParser, AuthController.login)
 
-router.post('/refresh', jsonParser, JwtService.verifyUser, AuthController.refresh)
+router.get('/refresh', JwtService.verifyUser, AuthController.refresh)
 
 module.exports = router;

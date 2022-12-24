@@ -2,12 +2,8 @@ const express = require("express");
 const router = express.Router();
 const UserHistoryController = require("../controllers/user-history");
 const bodyParser = require('body-parser')
-const jsonParser = bodyParser.json()
+const JwtService = require("../services/jwt")
 
-router.get("/", UserHistoryController.getRecords);
-
-router.get("/:id", UserHistoryController.getUserRecords);
-
-// router.post("/", jsonParser, UserHistoryController.addRecord);
+router.get("/", JwtService.verifyUser, UserHistoryController.getUserRecords);
 
 module.exports = router;

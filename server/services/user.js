@@ -5,7 +5,6 @@ exports.getUsers = async function () {
     try {
         return await User.find();
     } catch (e) {
-        // Log Errors
         throw Error('Error while Paginating Users')
     }
 }
@@ -18,9 +17,10 @@ exports.deleteUsers = async () => {
     }
 }
 
-exports.modify = async (user) => {
+exports.modify = async (body) => {
+    let user = body.data;
     try {
-        return await User.update({username: user.username}, user)
+        return await User.updateOne({username: user.username}, user)
     } catch (e) {
         throw Error(e)
     }
