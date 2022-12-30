@@ -42,7 +42,6 @@ exports.deleteJourney = async (id) => {
 }
 
 exports.buyJourneys = async (order) => {
-    console.log(order)
     let items = order.data;
     try {
         const recordPromises = items.map(item => {
@@ -62,9 +61,10 @@ exports.buyJourneys = async (order) => {
     }
 }
 
-exports.modify = async (journey) => {
+exports.modify = async (body) => {
+    const journey = body.data;
     try {
-        return await Journey.update({_id: journey._id}, journey)
+        return await Journey.updateOne({_id: journey._id}, journey)
     } catch (e) {
         throw new Error(e)
     }

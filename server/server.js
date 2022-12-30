@@ -33,4 +33,5 @@ app.use("/history", historyRecords);
 
 // users
 app.use("/users", users);
+
 app.listen(port, () => logger.info(`Server running on port: ${port}`));

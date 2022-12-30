@@ -95,7 +95,8 @@ exports.refresh = (user) => {
 const generateRefreshToken = (user) => {
     let payload = {
         username: user.username,
-        role: user.role
+        role: user.role,
+        banned: user.banned
     }
     return jwt.sign(payload, privateKey, { expiresIn: '3600s'} )
 }
@@ -103,7 +104,8 @@ const generateRefreshToken = (user) => {
 const generateAccessToken = (user) => {
     let payload = {
         username: user.username,
-        role: user.role
+        role: user.role,
+        banned: user.banned
     }
-    return jwt.sign(payload, privateKey, { expiresIn: '3600s'} )
+    return jwt.sign(payload, privateKey, { expiresIn: '10s'} )
 }

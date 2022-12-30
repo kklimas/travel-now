@@ -32,7 +32,7 @@ exports.deleteComment = async (id, user) => {
         if (!commentToDel || (commentToDel.username !== user.username && user.role > 1)) {
             throw  Error("Comment does not belong to user")
         }
-        return await JourneyComment.deleteOne({_id: id, username: user.username});
+        return await JourneyComment.deleteOne({_id: id});
     } catch (e){
         throw Error(e);
     }

@@ -10,13 +10,12 @@ exports.register = async (body) => {
     if (users instanceof Array && users.length > 0) {
         throw Error("Username exists.")
     }
-    body.role = 2;
 
     let user = User(body);
     try {
         await user.save();
         return JwtService.generateTokens(user);
-    } catch {
+    } catch (e) {
         throw Error("Register process failed.");
     }
 }
@@ -33,9 +32,14 @@ exports.login = async (user) => {
     const hashedUser = dbUser.at(0);
     const passwordMatch = await bcrypt.compare(password, hashedUser.password);
     if (passwordMatch) {
-        return JwtService.generateTokens(user)
+        let rawUser = {
+            username: username,
+            role: hashedUser.role
+        }
+        return JwtService.generateTokens(rawUser)
+    } else {
+        throw Error("Data is invalid.")
     }
-    throw Error("Data is invalid.")
 }
 exports.refresh = async (user) => {
     logger.info(`Refreshing access token for user ${user.username}`)

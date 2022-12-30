@@ -1,4 +1,5 @@
 const User = require('../models/user')
+const bcrypt = require('bcrypt')
 
 exports.getUsers = async function () {
 
@@ -20,7 +21,8 @@ exports.deleteUsers = async () => {
 exports.modify = async (body) => {
     let user = body.data;
     try {
-        return await User.updateOne({username: user.username}, user)
+        user.password = await bcrypt.hash(user.password, 10);
+        return await User.findByIdAndUpdate(user._id, user);
     } catch (e) {
         throw Error(e)
     }
