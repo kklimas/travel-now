@@ -6,8 +6,6 @@ import { Journey, JourneyFilter } from 'src/app/models/Journey';
 })
 export class JourneyFilterPipe implements PipeTransform {
   transform(journeys: Journey[], filter: JourneyFilter): Journey[] {
-    console.log(filter);
-    
     return journeys.filter((item) => {
       let nameValid =
         filter.query !== '' && filter.query !== null
