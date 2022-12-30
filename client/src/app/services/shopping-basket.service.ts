@@ -1,48 +1,58 @@
-import { Injectable, EventEmitter } from '@angular/core';
-import { BasketItem } from '../models/BasketItem';
-import { Journey } from '../models/Journey';
+import { Injectable, EventEmitter } from "@angular/core";
+import { BasketItem } from "../models/BasketItem";
+import { Journey } from "../models/Journey";
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class ShoppingBasketService {
-
   change: EventEmitter<any> = new EventEmitter();
 
   getItems(): BasketItem[] {
     let itemsKeys = Object.keys(sessionStorage);
-    return itemsKeys.map(key => {
-      let i = sessionStorage.getItem(key);
-      if (i !== null) {
-        return JSON.parse(i);
-      }
-    })
+    return itemsKeys
+      .filter((key) => key !== "accessToken" && key != "refreshToken")
+      .map((key) => {
+        let i = sessionStorage.getItem(key);
+        if (i !== null) {
+          return JSON.parse(i);
+        }
+      });
   }
 
   getItemsCount(): number {
     let itemsKeys = Object.keys(sessionStorage);
-    let counts = itemsKeys.map(key => {
-      let i = sessionStorage.getItem(key);
-      if (i !== null) {
-        let item: BasketItem = JSON.parse(i);
-        return item.count;
-      }
-      return 0;
-    })
-    return counts.reduce((x, y) => {return x + y}, 0);
+    let counts = itemsKeys
+      .filter((key) => key !== "accessToken" && key != "refreshToken")
+      .map((key) => {
+        let i = sessionStorage.getItem(key);
+        if (i !== null) {
+
+          let item: BasketItem = JSON.parse(i);
+          return item.count;
+        }
+        return 0;
+      });
+    return counts.reduce((x, y) => {
+      return x + y;
+    }, 0);
   }
 
   getItemsTotalCost(): number {
     let itemsKeys = Object.keys(sessionStorage);
-    let counts = itemsKeys.map(key => {
-      let i = sessionStorage.getItem(key);
-      if (i !== null) {
-        let item: BasketItem = JSON.parse(i);
-        return item.count * item.costPerUnit;
-      }
-      return 0;
-    })
-    return counts.reduce((x, y) => {return x + y}, 0);
+    let counts = itemsKeys
+      .filter((key) => key !== "accessToken" && key != "refreshToken")
+      .map((key) => {
+        let i = sessionStorage.getItem(key);
+        if (i !== null) {
+          let item: BasketItem = JSON.parse(i);
+          return item.count * item.costPerUnit;
+        }
+        return 0;
+      });
+    return counts.reduce((x, y) => {
+      return x + y;
+    }, 0);
   }
 
   addItem(journey: Journey) {
@@ -79,8 +89,12 @@ export class ShoppingBasketService {
   }
 
   removeItems() {
-    sessionStorage.clear();
-    this.change.emit();
+    Object.keys(sessionStorage).map(key => {
+      if (key !== 'accessToken' && key !== 'refreshToken') {
+        this.removeItemsOfGivenId(key)
+      }
+    })
+    this.change.emit(true);
   }
 
   itemsInBasket(id: string) {

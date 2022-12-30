@@ -6,6 +6,8 @@ import { Journey, JourneyFilter } from 'src/app/models/Journey';
 })
 export class JourneyFilterPipe implements PipeTransform {
   transform(journeys: Journey[], filter: JourneyFilter): Journey[] {
+    console.log(filter);
+    
     return journeys.filter((item) => {
       let nameValid =
         filter.query !== '' && filter.query !== null
@@ -33,9 +35,11 @@ export class JourneyFilterPipe implements PipeTransform {
       let startDateValid = true;
       let endDateValid = true;
 
-      if (filter.startDate !== null && filter.startDate !== undefined) {
-        startDateValid = filter.startDate <= new Date(item.startDate);
+      if (filter.startDate === null || filter.startDate === undefined) {
+        filter.startDate = new Date();
       }
+      startDateValid = filter.startDate <= new Date(item.startDate);
+      
       if (filter.endDate !== null && filter.endDate !== undefined) {
         endDateValid = filter.endDate >= new Date(item.endDate);
       }

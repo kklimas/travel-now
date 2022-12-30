@@ -7,6 +7,7 @@ import { ShoppingBasketService } from 'src/app/services/shopping-basket.service'
 import { AddCommentDialogComponent } from '../dialogs/add-comment-dialog/add-comment-dialog.component';
 import { JourneyCommentService } from 'src/app/services/journey-comment.service';
 import { JourneyDataService } from 'src/app/services/journey-data.service';
+import { EditJourneyDialogComponent } from '../dialogs/edit-journey-dialog/edit-journey-dialog.component';
 
 @Component({
   selector: 'app-journey-card',
@@ -15,7 +16,8 @@ import { JourneyDataService } from 'src/app/services/journey-data.service';
 })
 export class JourneyCardComponent implements OnInit {
   @Output() journeyDeleted: EventEmitter<Journey> = new EventEmitter<Journey>();
-  
+  @Output() journeyEditted: EventEmitter<any> = new EventEmitter();
+  @Input() userRole: number;
   @Input() journey: Journey;
   @Input() minCost: number;
   @Input() maxCost: number
@@ -30,7 +32,7 @@ export class JourneyCardComponent implements OnInit {
     private shoppingBasketService: ShoppingBasketService,
     private journeyCommentService: JourneyCommentService,
     private journeyDataService: JourneyDataService
-  ) {
+  ) {  
     this.responsive.observe(Breakpoints.XSmall).subscribe((result) => {
       if (result.matches) {
         this.isSmallWidth = true;
@@ -51,12 +53,25 @@ export class JourneyCardComponent implements OnInit {
       .afterClosed()
       .subscribe((deleted) => {
         if (deleted) {
-          this.journeyDeleted.emit(this.journey);
-          this.shoppingBasketService.removeItemsOfGivenId(this.journey._id);
-          this.shoppingBasketService.change.emit();
-          this.journeyCommentService.commentEvent.emit();
+          setTimeout(() => {
+            this.journeyDeleted.emit(this.journey);
+            this.shoppingBasketService.removeItemsOfGivenId(this.journey._id);
+            this.shoppingBasketService.change.emit();
+            this.journeyCommentService.commentEvent.emit();
+          }, 200)
         }
       });
+  }
+
+  openEditDialog() {
+    this.dialog
+      .open(EditJourneyDialogComponent, {data: this.journey})
+      .afterClosed()
+      .subscribe(editted => {
+        if (editted) {
+          this.journeyEditted.emit();
+        }
+      })
   }
 
   addTicketToBasket() {

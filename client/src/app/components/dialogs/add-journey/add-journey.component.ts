@@ -3,13 +3,15 @@ import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from "@ang
 import { Journey } from "src/app/models/Journey";
 import { JourneyDataService } from "src/app/services/journey-data.service";
 import { ToastService } from "src/app/services/toast.service";
+import { MatDialogRef } from "@angular/material/dialog";
+
 
 @Component({
-  selector: "app-add-journey",
-  templateUrl: "./add-journey.component.html",
-  styleUrls: ["./add-journey.component.css"],
+  selector: 'app-add-journey',
+  templateUrl: './add-journey.component.html',
+  styleUrls: ['./add-journey.component.css']
 })
-export class AddJourneyComponent {
+export class AddJourneyDialogComponent {
   INVALID_LENGTH = "Length should be greater.";
 
   minStartDate: Date;
@@ -17,7 +19,10 @@ export class AddJourneyComponent {
   maxDate: Date;
   journeyForm: FormGroup;
 
+  loading: boolean = false;
+
   constructor(
+    private dialogRef: MatDialogRef<AddJourneyDialogComponent>,
     private journeyDataService: JourneyDataService,
     private toastSevice: ToastService,
     private fb: FormBuilder
@@ -116,13 +121,20 @@ export class AddJourneyComponent {
   }
 
   onFormSubmit() {
-    this.journeyDataService.addJourney(this.journey).subscribe({
-      next: () => {
-        this.journeyDataService.refresh.emit();
+    this.loading = true;
+    const journey = this.journey;
+    
+    this.journeyDataService.addJourney(journey).subscribe({
+      complete: () => {
+        this.loading = false;
+        this.dialogRef.close(true);
         this.toastSevice.showSuccess();
-        this.setForm();
       },
-      error: () => this.toastSevice.showError(),
+      error: () => {
+        this.loading = false;
+        this.dialogRef.close(false)
+        this.toastSevice.showError()
+      },
     });
   }
 }

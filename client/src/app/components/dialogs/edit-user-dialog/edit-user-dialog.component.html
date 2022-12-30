@@ -1,0 +1,71 @@
+<form [formGroup]="editForm" (submit)="submit()">
+  <h1 mat-dialog-title>Edit user</h1>
+  <mat-spinner *ngIf="loading"></mat-spinner>
+  <div *ngIf="!loading" class="input-box" mat-dialog-content>
+    <mat-form-field appearance="fill">
+      <mat-label>Username</mat-label>
+      <input formControlName="username" matInput />
+      <mat-icon
+        matSuffix
+        matTooltip="Length between 5 and 15, should only contain alphanumeric characters
+      and/or underscores, first character should be
+      alphabetic"
+        >info</mat-icon
+      >
+      <mat-error *ngIf="controlHasError('username', 'required')"
+        >Username is required</mat-error
+      >
+      <mat-error *ngIf="controlHasError('username', 'pattern')"
+        >Username is invalid</mat-error
+      >
+    </mat-form-field>
+
+    <mat-slide-toggle formControlName="passwordChange" color="primary"
+      >Change password</mat-slide-toggle
+    >
+
+    <mat-form-field *ngIf="passwordChange === true" appearance="fill">
+      <mat-label>Password</mat-label>
+      <input formControlName="password" matInput />
+      <mat-icon
+        matSuffix
+        matTooltip="
+      At least one upper and lower case English letter, at least one digit, at least one special character, minimum eight in length.
+  "
+        >info</mat-icon
+      >
+
+      <mat-error *ngIf="controlHasError('password', 'required')"
+        >Password is required</mat-error
+      >
+      <mat-error *ngIf="controlHasError('password', 'pattern')"
+        >Password is invalid</mat-error
+      >
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Role</mat-label>
+      <mat-select formControlName="role">
+        <mat-option *ngFor="let role of roles" [value]="role">
+          {{ role | roleToString }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Status</mat-label>
+      <mat-select formControlName="status">
+        <mat-option [value]="false"> Active </mat-option>
+        <mat-option [value]="true"> Banned </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions>
+    <button [disabled]="editForm.invalid || loading" type="submit" mat-button>
+      Edit
+    </button>
+    <button mat-button mat-dialog-close [mat-dialog-close]="false">
+      Close
+    </button>
+  </div>
+</form>

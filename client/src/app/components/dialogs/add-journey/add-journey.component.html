@@ -1,6 +1,7 @@
 <form class="box" [formGroup]="journeyForm" (ngSubmit)="onFormSubmit()">
   <h1>Add new journey</h1>
-  <div class="content">
+  <mat-spinner *ngIf="loading"></mat-spinner>
+  <div *ngIf="!loading" mat-dialog-content class="content">
     <div class="row">
       <mat-form-field>
         <mat-label>Name</mat-label>

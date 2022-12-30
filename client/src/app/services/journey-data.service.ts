@@ -1,19 +1,19 @@
-import { EventEmitter, Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
-import { Journey } from '../models/Journey';
-import { BasketItem } from '../models/BasketItem';
+import { EventEmitter, Injectable } from "@angular/core";
+import { Observable } from "rxjs";
+import { HttpClient } from "@angular/common/http";
+import { Journey } from "../models/Journey";
+import { BasketItem } from "../models/BasketItem";
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class JourneyDataService {
-  private BASE_URL = 'http://localhost:3000';
-  private JOURNEYS = '/journeys';
-  private RESERVATE = '/buy';
-  
+  private BASE_URL = "http://localhost:3000";
+  private JOURNEYS = "/journeys";
+  private RESERVATE = "/buy";
+
   refresh: EventEmitter<any> = new EventEmitter();
-  
+
   constructor(
     private httpClient: HttpClient
   ) {}
@@ -28,6 +28,12 @@ export class JourneyDataService {
     );
   }
 
+  editJourney(journey: Journey): Observable<Journey> {
+    return this.httpClient.put<Journey>(
+      `${this.BASE_URL}${this.JOURNEYS}`, journey
+    )
+  }
+
   addJourney(journey: Journey): Observable<Journey> {
     return this.httpClient.post<Journey>(
       `${this.BASE_URL}${this.JOURNEYS}`,
@@ -36,7 +42,9 @@ export class JourneyDataService {
   }
 
   deleteJourney(id: string): Observable<Journey> {
-    return this.httpClient.delete<Journey>(`${this.BASE_URL}${this.JOURNEYS}/${id}`);
+    return this.httpClient.delete<Journey>(
+      `${this.BASE_URL}${this.JOURNEYS}/${id}`
+    );
   }
 
   buyJourneys(items: BasketItem[]): Observable<any> {

@@ -1,16 +1,20 @@
-import { Component } from "@angular/core";
+import { Component, Input } from "@angular/core";
 import { NavigationEnd, Router } from "@angular/router";
+import { AuthService } from "src/app/services/auth.service";
 import { ShoppingBasketService } from "src/app/services/shopping-basket.service";
 import { UserHistoryService } from "src/app/services/user-history.service";
-import { JourneyDataService } from "src/app/services/journey-data.service";
-
+import { LogoutDialogComponent } from "../dialogs/logout-dialog/logout-dialog.component";
+import { MatDialog } from "@angular/material/dialog";
+import { ToastService } from "src/app/services/toast.service";
 
 @Component({
   selector: "app-page-header",
   templateUrl: "./page-header.component.html",
-  styleUrls: ["./page-header.component.css"]
+  styleUrls: ["./page-header.component.css"],
 })
 export class PageHeaderComponent {
+  @Input() userRole: number;
+  @Input() username: string | null;
   title: string = "Home";
   totalTickets: number = 0;
   totalCost: number = 0;
@@ -19,21 +23,25 @@ export class PageHeaderComponent {
   constructor(
     private router: Router,
     private shoppingBasketService: ShoppingBasketService,
-    private userHistoryService: UserHistoryService
+    private userHistoryService: UserHistoryService,
+    private dialog: MatDialog,
+    private authService: AuthService,
+    private toastService: ToastService
   ) {
     this.handlePathChange();
     this.handleBasket();
     this.handlePlannedJourneys();
-    this.shoppingBasketService.change.subscribe(() => {
+    this.shoppingBasketService.change.subscribe((res) => {
       this.handleBasket();
-      this.handlePlannedJourneys();
+      if (res) {
+        this.handlePlannedJourneys();
+      }
     });
+    
   }
   private handlePathChange() {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
-        console.log(event.url);
-        
         switch (event.url) {
           case "/":
             this.title = "Home";
@@ -53,6 +61,9 @@ export class PageHeaderComponent {
           case "/history":
             this.title = "History";
             break;
+          case "/users":
+            this.title = "Users";
+            break;
           default:
             this.title = "Details";
             break;
@@ -62,26 +73,29 @@ export class PageHeaderComponent {
   }
 
   private handlePlannedJourneys() {
-    this.userHistoryService.getHistory().subscribe({
-      next: (data) => {
-        if (data.length > 0) {
-          let startDates = data.map(j => j.startDate).sort();
-          
-          let currentDate = new Date()
-          startDates.forEach(date => {
-            let d = new Date(date);
-            if (d.getTime() > currentDate.getTime()) {
-              if (d.getFullYear() === currentDate.getFullYear()
-                && d.getMonth() === currentDate.getMonth()
-                && d.getDate() - currentDate.getDate() <= 3) {
-            
+    if (this.userRole < 3) {
+      this.userHistoryService.getHistory().subscribe({
+        next: (data) => {
+          if (data.length > 0) {
+            let startDates = data.map((j) => j.startDate).sort();
+  
+            let currentDate = new Date();
+            startDates.forEach((date) => {
+              let d = new Date(date);
+              if (d.getTime() > currentDate.getTime()) {
+                if (
+                  d.getFullYear() === currentDate.getFullYear() &&
+                  d.getMonth() === currentDate.getMonth() &&
+                  d.getDate() - currentDate.getDate() <= 3
+                ) {
                   this.isJourneyNear = true;
                 }
-            }  
-          })
-        }
-      }
-    })
+              }
+            });
+          }
+        },
+      });
+    }
   }
 
   private handleBasket() {
@@ -89,7 +103,16 @@ export class PageHeaderComponent {
     this.totalCost = this.shoppingBasketService.getItemsTotalCost();
   }
 
-  tooltipBasket(): string {
-    return 'Basket cost: $' + this.totalCost + "&#13;" + 'Tickets: ' + this.totalTickets
+  openLogoutDialog() {
+    this.dialog
+      .open(LogoutDialogComponent)
+      .afterClosed()
+      .subscribe((loggedOut) => {
+        if (loggedOut) {
+          this.router.navigate(["/home"]);
+          this.authService.logout();
+          this.toastService.showSuccess();
+        }
+      })
   }
 }

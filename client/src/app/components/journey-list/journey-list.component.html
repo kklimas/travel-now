@@ -1,14 +1,20 @@
 <div class="box">
-  <div *ngIf="filteredJourneys.length > 0" class="flex-box mt">
+  <div *ngIf="user.role < 2" class="add-journey">
+    <button (click)="openDialog()" mat-raised-button color="primary">
+      Add journey
+    </button>
+  </div>
+  <div class="flex-box mt">
     <app-journey-card
       (journeyDeleted)="getJourneys()"
+      (journeyEditted)="getJourneys()"
       [journey]="j"
       [minCost]="minCost"
       [maxCost]="maxCost"
-      *ngFor="let j of filteredJourneys | journeyFilter : filter"
+      [userRole]="user.role"
+      *ngFor="let j of journeys | journeyFilter : filter"
     ></app-journey-card>
   </div>
-  <app-no-data-found *ngIf="filteredJourneys.length == 0"></app-no-data-found>
   <div class="mt">
     <app-journey-filter
       (filterEvent)="filterChange($event)"

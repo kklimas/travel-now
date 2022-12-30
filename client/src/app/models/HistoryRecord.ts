@@ -1,6 +1,6 @@
 export class Record {
     _id: string;
-    userId: string;
+    username: string;
     journeyId: string;
     tickets: number;
     orderDate: Date;

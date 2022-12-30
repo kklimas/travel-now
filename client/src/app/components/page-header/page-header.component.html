@@ -1,6 +1,6 @@
 <mat-toolbar>
-  <span>{{ title }}</span>
-  <div class="summary">
+  <h2>{{ title }}</h2>
+  <div *ngIf="userRole < 3" class="summary">
     <button
       mat-icon-button
       matTooltip="Basket cost: ${{ totalCost }} Tickets: {{ totalTickets }}"
@@ -17,8 +17,24 @@
     >
       <mat-icon class="alert">add_alert</mat-icon>
     </button>
-    <button matTooltip="User details" mat-icon-button>
-      <mat-icon>supervised_user_circle</mat-icon>
+    <button
+      *ngIf="username"
+      mat-button
+      [matMenuTriggerFor]="menu"
+      aria-label="Example icon-button with a menu"
+      matTooltip="More"
+    >
+      {{ username }}
     </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item routerLink="/user">
+        <mat-icon>supervised_user_circle</mat-icon>
+        <span>Details</span>
+      </button>
+      <button (click)="openLogoutDialog()" mat-menu-item>
+        <mat-icon>backspace</mat-icon>
+        <span>Logout</span>
+      </button>
+    </mat-menu>
   </div>
 </mat-toolbar>

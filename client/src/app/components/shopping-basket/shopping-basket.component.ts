@@ -6,7 +6,7 @@ import { Journey } from "src/app/models/Journey";
 import { JourneyDataService } from "src/app/services/journey-data.service";
 import { ShoppingBasketService } from "src/app/services/shopping-basket.service";
 import { ToastService } from "src/app/services/toast.service";
-import { ConfirmBuyDialogComponent } from "../dialogs/confirm-buy-dialog/confirm-buy-dialog.component";
+import { ConfirmDialogComponent } from "../dialogs/confirm-dialog/confirm-dialog.component";
 
 @Component({
   selector: "app-shopping-basket",
@@ -36,7 +36,7 @@ export class ShoppingBasketComponent {
   }
 
   public openBuyItemsDialog() {
-    this.dialog.open(ConfirmBuyDialogComponent).afterClosed()
+    this.dialog.open(ConfirmDialogComponent, {data: 'Are you sure to buys theese items?'}).afterClosed()
     .subscribe(bought => {
       if (bought) this.buyItems(); 
     })
@@ -72,7 +72,9 @@ export class ShoppingBasketComponent {
         this.shoppingBasketService.removeItems();
         this.toastService.showSuccess();
       },
-      error: () => this.toastService.showError()
+      error: (error) => {
+        this.toastService.showError()
+      }
     })
     
   }

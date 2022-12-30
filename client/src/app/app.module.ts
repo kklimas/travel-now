@@ -1,6 +1,6 @@
-import { NgModule } from '@angular/core';
+import { ErrorHandler, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { AppComponent } from './app.component';
@@ -32,17 +32,16 @@ import { JourneyCommentComponent } from './components/journey-comment/journey-co
 import { JourneyCommentListComponent } from './components/journey-comment-list/journey-comment-list.component';
 import { NoDataFoundComponent } from './components/no-data-found/no-data-found.component';
 import { AddCommentDialogComponent } from './components/dialogs/add-comment-dialog/add-comment-dialog.component';
-import { Router, RouterModule, Routes } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
-import { AddJourneyComponent } from './components/add-journey/add-journey.component';
 import { JourneyDetailsComponent } from './components/journey-details/journey-details.component';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner'; 
 import {MatMenuModule} from '@angular/material/menu';
 import { LayoutComponent } from './components/layout/layout.component'; 
 import {MatDividerModule} from '@angular/material/divider';
-import { ConfirmBuyDialogComponent } from './components/dialogs/confirm-buy-dialog/confirm-buy-dialog.component';
+import { ConfirmDialogComponent } from './components/dialogs/confirm-dialog/confirm-dialog.component';
 import { ShoppingBasketCardComponent } from './components/shopping-basket-card/shopping-basket-card.component';
 import { UserHistoryComponent } from './components/user-history/user-history.component';
 import { AppRoutingModule } from './app-routing.module'; 
@@ -52,6 +51,18 @@ import { StatusTextPipe } from './data/pipes/status-text.pipe';
 import { StatusFilterPipe } from './data/pipes/status-filter.pipe';
 import { ErrorMessagePipe } from './data/pipes/error-message.pipe'
 import { PageHeaderComponent } from './components/page-header/page-header.component';
+import { LogRegDialogComponent } from './components/dialogs/log-reg-dialog/log-reg-dialog.component';
+import { LogoutDialogComponent } from './components/dialogs/logout-dialog/logout-dialog.component';
+import { AuthInterceptor } from './utils/auth.interceptor';
+import { UserDetailsComponent } from './components/user-details/user-details.component';
+import { AddJourneyDialogComponent } from './components/dialogs/add-journey/add-journey.component';
+import { UsersListComponent } from './components/users-list/users-list.component';
+import { RoleToStringPipe } from './data/pipes/role-to-string.pipe';
+import { RoleToColorPipe } from './data/pipes/role-to-color.pipe';
+import { EditUserDialogComponent } from './components/dialogs/edit-user-dialog/edit-user-dialog.component';
+import { UserFilterPipe } from './data/pipes/user-filter.pipe';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import { EditJourneyDialogComponent } from './components/dialogs/edit-journey-dialog/edit-journey-dialog.component'; 
 
 @NgModule({
   declarations: [
@@ -66,18 +77,27 @@ import { PageHeaderComponent } from './components/page-header/page-header.compon
     JourneyCommentListComponent,
     NoDataFoundComponent,
     AddCommentDialogComponent,
-    AddJourneyComponent,
     JourneyDetailsComponent,
     HomeComponent,
     LayoutComponent,
-    ConfirmBuyDialogComponent,
+    ConfirmDialogComponent,
     ShoppingBasketCardComponent,
     UserHistoryComponent,
     StatusColorPipe,
     StatusTextPipe,
     StatusFilterPipe,
     ErrorMessagePipe,
-    PageHeaderComponent
+    PageHeaderComponent,
+    LogRegDialogComponent,
+    LogoutDialogComponent,
+    UserDetailsComponent,
+    AddJourneyDialogComponent,
+    UsersListComponent,
+    RoleToStringPipe,
+    RoleToColorPipe,
+    EditUserDialogComponent,
+    UserFilterPipe,
+    EditJourneyDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -89,6 +109,7 @@ import { PageHeaderComponent } from './components/page-header/page-header.compon
     MatToolbarModule,
     MatIconModule,
     MatCardModule,
+    MatSlideToggleModule,
     MatTooltipModule,
     LayoutModule,
     MatDialogModule,
@@ -112,7 +133,17 @@ import { PageHeaderComponent } from './components/page-header/page-header.compon
     MatChipsModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [
+    // {
+    //   provide: ErrorHandler,
+    //   useClass: GlobalErrorHandler
+    // },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

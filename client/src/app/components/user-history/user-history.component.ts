@@ -1,4 +1,5 @@
 import { LiveAnnouncer } from "@angular/cdk/a11y";
+import { HttpResponse } from "@angular/common/http";
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort, Sort } from "@angular/material/sort";
@@ -6,6 +7,7 @@ import { MatTableDataSource } from "@angular/material/table";
 import { Router } from "@angular/router";
 import { StatusFilterPipe } from "src/app/data/pipes/status-filter.pipe";
 import { HistoryRecord, RecordStatus } from "src/app/models/HistoryRecord";
+import { AuthService } from "src/app/services/auth.service";
 import { ToastService } from "src/app/services/toast.service";
 import { UserHistoryService } from "src/app/services/user-history.service";
 
@@ -34,8 +36,8 @@ export class UserHistoryComponent implements OnInit{
   constructor(
     private userHistoryService: UserHistoryService,
     private toastService: ToastService,
-    private _liveAnnouncer: LiveAnnouncer,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) {
     
   }
@@ -53,7 +55,9 @@ export class UserHistoryComponent implements OnInit{
         });
         this.filterByStatus();
       },
-      error: () => this.toastService.showError(),
+      error: (err) => {
+        this.toastService.showError();
+      },
     });
   }
 
@@ -62,7 +66,6 @@ export class UserHistoryComponent implements OnInit{
   }
 
   switchTo(record: HistoryRecord) {
-    this.router.navigate(['/journeys', `/${record.journeyId}`])
-    
+    this.router.navigate([`/journeys/${record.journeyId}`])
   }
 }

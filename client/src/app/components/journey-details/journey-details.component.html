@@ -22,7 +22,7 @@
       </div>
       <div class="item">
         <p>Cost</p>
-        <p>{{ journey.cost }}</p>
+        <p>${{ journey.cost }}</p>
       </div>
       <div class="item">
         <p>Tickets left</p>
@@ -61,6 +61,7 @@
     <mat-divider></mat-divider>
     <div class="data">
       <div
+        *ngIf="user.role < 3"
         class="item-1"
         [ngClass]="{
           green: ticketsInBasket >= 10,
@@ -70,7 +71,7 @@
       >
         <p>Currently reservated: {{ ticketsInBasket }}</p>
       </div>
-      <div>
+      <div *ngIf="user.role < 3">
         <button
           [disabled]="!canAdd"
           (click)="addTicketToBasket()"
@@ -100,6 +101,20 @@
     <mat-icon>arrow_back</mat-icon>
     Go back to journeys list
   </button>
-  <app-journey-comment-list [comments]="comments"></app-journey-comment-list>
-  <button mat-button (click)="openAddCommentDialog()">ADD COMMENT</button>
+  <app-journey-comment-list
+    (commentDelete)="commentDelete($event)"
+    [user]="user"
+    [comments]="comments"
+  ></app-journey-comment-list>
+  <button
+    *ngIf="user.role < 3"
+    [disabled]="!(canAddComment || user.role < 2)"
+    mat-fab
+    extended
+    color="warn"
+    (click)="openAddCommentDialog()"
+  >
+    <mat-icon> comment</mat-icon>
+    ADD COMMENT
+  </button>
 </div>

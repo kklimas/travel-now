@@ -1,0 +1,111 @@
+<form class="box" [formGroup]="journeyForm" (ngSubmit)="onFormSubmit()">
+  <h1>Add new journey</h1>
+  <mat-spinner *ngIf="loading"></mat-spinner>
+  <div *ngIf="!loading" mat-dialog-content class="content">
+    <div class="row">
+      <mat-form-field>
+        <mat-label>Name</mat-label>
+        <input formControlName="name" matInput />
+        <mat-error *ngIf="name.invalid"></mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Country</mat-label>
+        <input formControlName="country" matInput />
+        <mat-error *ngIf="country.invalid"></mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="fill" floatLabel="always">
+        <mat-label>Cost</mat-label>
+        <input
+          formControlName="cost"
+          matInput
+          type="number"
+          class="right-align"
+        />
+        <mat-error *ngIf="!cost || cost.invalid"></mat-error>
+        <span matTextPrefix>$&nbsp;</span>
+        <span matTextSuffix>.00</span>
+      </mat-form-field>
+    </div>
+    <div class="row">
+      <mat-form-field>
+        <mat-label>Available tickets</mat-label>
+        <input
+          formControlName="tickets"
+          matInput
+          type="number"
+          class="right-align"
+        />
+        <mat-error *ngIf="!tickets || tickets.invalid"></mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Start date</mat-label>
+        <input
+          (ngModelChange)="startDateChange()"
+          formControlName="startDate"
+          [min]="minStartDate"
+          [max]="maxDate"
+          matInput
+          [matDatepicker]="startDate"
+        />
+        <mat-datepicker-toggle
+          matIconSuffix
+          [for]="startDate"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #startDate></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>End date</mat-label>
+        <input
+          (ngModelChange)="endDateChange()"
+          formControlName="endDate"
+          [min]="minEndDate"
+          matInput
+          [matDatepicker]="endDate"
+        />
+        <mat-datepicker-toggle
+          matIconSuffix
+          [for]="endDate"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #endDate></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <div class="column">
+      <ng-container
+        formArrayName="urls"
+        *ngFor="let url of urls.controls; let i = index"
+      >
+        <div [formGroupName]="i" class="multi">
+          <button type="button" mat-mini-fab color="primary">
+            {{ i + 1 }}
+          </button>
+          <mat-form-field>
+            <mat-label>Image url</mat-label>
+            <input class="multi" formControlName="url" matInput />
+          </mat-form-field>
+          <button
+            [disabled]="i == 0"
+            (click)="removeUrl(i)"
+            type="button"
+            mat-icon-button
+          >
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </ng-container>
+      <button (click)="addUrl()" type="button" mat-icon-button>
+        <mat-icon>add</mat-icon>
+      </button>
+    </div>
+    <div class="column">
+      <mat-form-field appearance="fill">
+        <mat-label>Description</mat-label>
+        <textarea formControlName="description" matInput></textarea>
+        <mat-error *ngIf="description.invalid"></mat-error>
+      </mat-form-field>
+    </div>
+    <button [disabled]="journeyForm.invalid" type="submit" mat-button>
+      Edit
+    </button>
+  </div>
+  <div></div>
+</form>

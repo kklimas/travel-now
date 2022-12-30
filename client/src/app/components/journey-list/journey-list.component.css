@@ -19,3 +19,18 @@ h1 {
     flex-wrap: wrap;
     gap: 32px;
 }
+.add-journey {
+    width: 100%;
+    margin-top: 48px;
+}
+.add-journey button {
+    font-size: 2rem;
+    padding: 32px 32px;
+}
+
+@media screen and (max-width: 800px) {
+    .add-journey button {
+        font-size: 1.6rem;
+        padding: 24px 24px;
+    }   
+}

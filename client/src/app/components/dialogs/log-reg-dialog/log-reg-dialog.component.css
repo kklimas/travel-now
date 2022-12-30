@@ -1,0 +1,33 @@
+.dialog {
+    padding: 32px;
+    min-width: 450px;
+    min-height: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+mat-spinner {
+    margin: auto;
+}
+h1 {
+    font-size: 2rem !important;
+}
+.right {
+    margin-left: -16px;
+}
+.eye {
+    cursor: pointer;
+}
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.form mat-form-field:first-child {
+    margin-top: 16px;
+}
+
+.actions {
+    margin-left: 12px !important;
+}

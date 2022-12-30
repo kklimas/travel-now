@@ -1,10 +1,14 @@
 import { Component } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { JourneyFilterPipe } from 'src/app/data/pipes/journey-filter.pipe';
 import { Journey, JourneyCommentDTO, JourneyFilter } from 'src/app/models/Journey';
+import { AuthService } from 'src/app/services/auth.service';
 import { JourneyCommentService } from 'src/app/services/journey-comment.service';
 import { JourneyDataService } from 'src/app/services/journey-data.service';
 import { ShoppingBasketService } from 'src/app/services/shopping-basket.service';
 import { ToastService } from 'src/app/services/toast.service';
+import { AddJourneyDialogComponent } from '../dialogs/add-journey/add-journey.component';
+import { User } from 'src/app/models/User';
 
 @Component({
   selector: 'app-journey-list',
@@ -12,6 +16,7 @@ import { ToastService } from 'src/app/services/toast.service';
   styleUrls: ['./journey-list.component.css'],
 })
 export class JourneyListComponent {
+  user: User;
   journeys: Journey[] = [];
   countries: string[] = []
   filteredJourneys: Journey[] = [];
@@ -24,23 +29,24 @@ export class JourneyListComponent {
     private journeyService: JourneyDataService,
     private toastService: ToastService,
     private shoppingBasketService: ShoppingBasketService,
-    private journeyCommentService: JourneyCommentService
+    private journeyCommentService: JourneyCommentService,
+    private authService: AuthService,
+    private dialog: MatDialog
   ) {
+    this.user = this.authService.getUser();
+    this.handleAuth();
     this.getJourneys();
-    journeyService.refresh.subscribe(() => {
-      this.getJourneys();
-    });
+    journeyService.refresh.subscribe(() => this.getJourneys());
   }
 
   getJourneys() {
     this.journeyService.getJourneys().subscribe({
       next: (data) => {
         this.journeys = data;
+        this.markJourneys();
         this.getStarsForJourneys();
         this.getTripCountries();
         this.removeTakenTickets();
-        this.filterChange(this.filter);
-        this.markJourneys();
       },
       error: () => {
         this.toastService.showError();
@@ -50,7 +56,19 @@ export class JourneyListComponent {
   
 
   filterChange(filter: JourneyFilter) {
-    this.filteredJourneys = this.pipe.transform(this.journeys, filter);
+    this.filter = filter;
+  }
+
+  openDialog() {
+    this.dialog.open(AddJourneyDialogComponent).afterClosed().subscribe(added => {
+      if (added) {
+        this.journeyService.refresh.emit();
+      }
+    });
+  }
+
+  private handleAuth() {
+    this.authService.user.subscribe(user => this.user = user);
   }
 
   // remove tickets that were saved in storage
@@ -62,16 +80,15 @@ export class JourneyListComponent {
 
   private markJourneys() {
     let min = Infinity;
-    let max = 0;
-    let currentDate = new Date();
-    this.filteredJourneys.forEach(j => {
-      if (currentDate.getTime() <= (new Date(j.startDate).getTime())){
-        if (j.cost > max) max = j.cost;
-        if (j.cost < min) min = j.cost;
-      }      
+    let max = 1;
+
+    this.journeys.forEach(j => {
+      if (j.cost > max) max = j.cost;
+      if (j.cost < min) min = j.cost;
     });
     this.maxCost = max;
     this.minCost = min;
+    if (min === Infinity) this.minCost = 1;
   }
 
   private getTripCountries() {

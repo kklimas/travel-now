@@ -4,6 +4,8 @@
     <app-journey-comment
       *ngFor="let comment of comments"
       [comment]="comment"
+      [user]="user"
+      (commentDelete)="commentDelete.emit($event)"
     ></app-journey-comment>
   </div>
 </div>

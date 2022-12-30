@@ -1,0 +1,101 @@
+<div class="table">
+  <div class="flex">
+    <mat-form-field appearance="fill">
+      <mat-label>Username</mat-label>
+      <input
+        [(ngModel)]="userFilter.username"
+        (ngModelChange)="filterChange()"
+        matInput
+      />
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Role</mat-label>
+      <mat-select
+        [(ngModel)]="userFilter.role"
+        (ngModelChange)="filterChange()"
+      >
+        <mat-option *ngFor="let role of roles" [value]="role">
+          {{ role | roleToString }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Status</mat-label>
+      <mat-select
+        [(ngModel)]="userFilter.banned"
+        (ngModelChange)="filterChange()"
+      >
+        <mat-option [value]="false"> Active </mat-option>
+        <mat-option [value]="true"> Banned </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <button (click)="clear()" class="clear" mat-button color="primary">
+    Clear filters
+  </button>
+  <div class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource">
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef>ID</th>
+        <td mat-cell *matCellDef="let element">{{ element._id }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="username">
+        <th mat-header-cell *matHeaderCellDef>Name</th>
+        <td mat-cell *matCellDef="let element">{{ element.username }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="creationDate">
+        <th mat-header-cell *matHeaderCellDef>Creation date</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.creationDate | date }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="role">
+        <th mat-header-cell *matHeaderCellDef>Role</th>
+        <td mat-cell *matCellDef="let element">
+          <mat-chip-option
+            selected
+            selectable="false"
+            [color]="element.role | roleToColor"
+            >{{ element.role | roleToString }}</mat-chip-option
+          >
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef>Status</th>
+        <td mat-cell *matCellDef="let element">
+          <mat-chip
+            [ngClass]="{ active: !element.banned, banned: element.banned }"
+          >
+            <div *ngIf="element.banned">Banned</div>
+            <div *ngIf="!element.banned">Active</div>
+          </mat-chip>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="edit">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let element">
+          <button (click)="openEditDialog(element)" mat-icon-button>
+            <mat-icon>edit</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+      <tr class="mat-row" *matNoDataRow>
+        <td [attr.colspan]="displayedColumns.length">No records were found</td>
+      </tr>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+
+    <mat-paginator
+      [pageSizeOptions]="[5, 10, 20]"
+      showFirstLastButtons
+      aria-label="Select page of periodic elements"
+    >
+    </mat-paginator>
+  </div>
+</div>

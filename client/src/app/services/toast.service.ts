@@ -21,6 +21,10 @@ export class ToastService {
     this.toastr.error(this.ERROR_MESSAGE, '', this.TOAST_CONFIG);
   }
 
+  showErrorMessage(message: string) {
+    this.toastr.error(message, '', this.TOAST_CONFIG);
+  }
+
   showInfo(message: string) {
     this.toastr.info(message, '', this.TOAST_CONFIG);
   }

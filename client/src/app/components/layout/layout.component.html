@@ -6,9 +6,10 @@
   <div class="navbar">
     <a routerLink="home">Home</a>
     <a routerLink="journeys">Journeys</a>
-    <a routerLink="add-journey">Add journey</a>
-    <a routerLink="shopping-basket">Shopping basket</a>
-    <a routerLink="history">History</a>
+    <a *ngIf="user.role < 3" routerLink="history">History</a>
+    <a *ngIf="user.role === 0" routerLink="users">Users</a>
+    <a *ngIf="user.role > 2" (click)="openDialog(1)">Login</a>
+    <a *ngIf="user.role > 2" (click)="openDialog(0)">Register</a>
   </div>
   <div class="sidebar">
     <button (click)="sidenav.toggle()" mat-icon-button>
@@ -16,7 +17,10 @@
     </button>
   </div>
 </mat-toolbar>
-<app-page-header></app-page-header>
+<app-page-header
+  [userRole]="user.role"
+  [username]="user.username"
+></app-page-header>
 <mat-sidenav-container>
   <mat-sidenav #sidenav>
     <mat-nav-list>
@@ -24,21 +28,43 @@
         <mat-icon>home</mat-icon>
         Home
       </a>
+      <a
+        *ngIf="user.role === 0"
+        (click)="sidenav.toggle()"
+        routerLink="users"
+        mat-list-item
+      >
+        <mat-icon>supervisor_account</mat-icon>
+        Users
+      </a>
       <a (click)="sidenav.toggle()" routerLink="journeys" mat-list-item>
         <mat-icon>terrain</mat-icon>
         Journeys
       </a>
-      <a (click)="sidenav.toggle()" routerLink="add-journey" mat-list-item>
-        <mat-icon>add</mat-icon>
-        Add journey
-      </a>
-      <a (click)="sidenav.toggle()" routerLink="shopping-basket" mat-list-item>
-        <mat-icon>shopping_cart</mat-icon>
-        Shopping basket
-      </a>
-      <a (click)="sidenav.toggle()" routerLink="history" mat-list-item>
+      <a
+        *ngIf="user.role < 3"
+        (click)="sidenav.toggle()"
+        routerLink="history"
+        mat-list-item
+      >
         <mat-icon>history</mat-icon>
         History
+      </a>
+      <a
+        *ngIf="user.role >= 3"
+        (click)="sidenav.toggle(); openDialog(1)"
+        mat-list-item
+      >
+        <mat-icon>assignment_ind</mat-icon>
+        Login
+      </a>
+      <a
+        *ngIf="user.role >= 3"
+        (click)="sidenav.toggle(); openDialog(0)"
+        mat-list-item
+      >
+        <mat-icon>group_add</mat-icon>
+        Register
       </a>
     </mat-nav-list>
   </mat-sidenav>

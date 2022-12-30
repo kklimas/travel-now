@@ -1,6 +1,5 @@
 import { Component, Output, Input, EventEmitter } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { debounceTime } from 'rxjs';
 import { JourneyFilter } from 'src/app/models/Journey';
 import { JourneyDataService } from 'src/app/services/journey-data.service';
 
@@ -34,19 +33,21 @@ export class JourneyFilterComponent {
   }
 
   initForm() {
+    let min = this.minCost !== undefined ? this.minCost: 0;
+    let max = this.maxCost !== undefined ? this.maxCost: Infinity;
+    
     this.filterForm = new FormGroup({
       query: new FormControl(''),
       startDate: new FormControl(),
       endDate: new FormControl(),
       countries: new FormControl([]),
       stars: new FormControl([]),
-      minCost: new FormControl(this.minCost),
-      maxCost: new FormControl(this.maxCost)
+      minCost: new FormControl(min),
+      maxCost: new FormControl(max)
     })
 
     this.filterForm.valueChanges
-      .pipe(debounceTime(500))
-      .subscribe(data => this.filterEvent.emit(data))
+      .subscribe(data => this.filterEvent.emit(this.validateFilter(data)))
   }
 
   formController(name: string) {
@@ -54,13 +55,19 @@ export class JourneyFilterComponent {
   }
 
   clearFilters() {
-    this.filterForm.reset();
-    let j = new JourneyFilter();
-    j.minCost = this.minCost;
-    j.maxCost = this.maxCost;
-    this.filterForm.get('minCost')?.setValue(this.minCost);
-    this.filterForm.get('maxCost')?.setValue(this.maxCost);
-    this.filterEvent.emit(j);
+    this.filterEvent.emit(new JourneyFilter());
+    this.initForm();
   }
   
+  private validateFilter(filter: JourneyFilter) {
+    let newFilter = new JourneyFilter();
+    if (filter.startDate == null) {
+      filter.startDate = newFilter.startDate;
+    }
+    if (filter.endDate == null) {
+      filter.endDate = newFilter.endDate;
+    }
+    return filter
+  }
+
 }

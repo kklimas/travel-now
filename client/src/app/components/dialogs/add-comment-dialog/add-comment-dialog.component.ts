@@ -28,7 +28,6 @@ export class AddCommentDialogComponent {
 
   initForm() {
     this.commentForm = new FormGroup({
-      username: new FormControl('', Validators.required),
       journeyName: new FormControl({value: this.journey.name, disabled: true}),
       stars: new FormControl('', Validators.required),
       date: new FormControl(''),
@@ -40,13 +39,10 @@ export class AddCommentDialogComponent {
     let comment: JourneyComment = new JourneyComment();
     comment.journeyId = this.journey._id;
     comment.journeyName = this.journey.name;
-    comment.username = this.username;
     comment.text = this.comment;
     comment.stars = this.star;
     comment.userDate = this.date;
-    console.log(this.date);
     
-
     this.journeyCommentService.addComment(comment).subscribe({
       next: () => {
         this.toastService.showSuccess()
@@ -55,10 +51,6 @@ export class AddCommentDialogComponent {
       error: () => this.toastService.showError()
     })
     
-  }
-
-  get username() {
-    return this.commentForm.get('username')?.value;
   }
 
   get star() {

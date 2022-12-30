@@ -43,3 +43,6 @@ mat-nav-list a  {
         padding: 16px 32px;
     }
 }
+a {
+    cursor: pointer;
+}

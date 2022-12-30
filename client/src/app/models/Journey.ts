@@ -7,7 +7,7 @@ export class Journey {
     startDate: Date;
     endDate: Date;
     description: string;
-    urls: string[];
+    urls: string[] = [];
     stars: number;
 }
 
@@ -31,9 +31,9 @@ export class JourneyCommentDTO {
 export class JourneyFilter {
     query: string = '';
     countries: string[] = [];
-    startDate: Date;
-    endDate: Date;
-    minCost: number;
-    maxCost: number;
-    stars: number[];
+    startDate: Date = new Date('2000-01-01');
+    endDate: Date = new Date('2100-01-01');
+    minCost: number = 0;
+    maxCost: number = Infinity;
+    stars: number[] = [];
 }
