@@ -54,7 +54,8 @@ export class JourneyDetailsComponent {
       }
     });
     this.commentsService.commentEvent.subscribe(() =>
-      this.getComments(this.journey._id)
+      {this.getComments(this.journey._id)
+        this.checkIfCanAddComment()}
     );
   }
 
