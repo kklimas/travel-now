@@ -42,3 +42,26 @@ cd ./client
 npm i
 ng serve --open
 ```
+
+# Sample views
+
+### Journeys
+<img src="./ss/journeys.png" alt="drawing" width="700"/>
+
+### Journey details
+<img src="./ss/journey_d.png" alt="drawing" width="700"/>
+
+### Journey comments
+<img src="./ss/comments.png" alt="drawing" width="700"/>
+
+### Create journey
+<img src="./ss/add_journey.png" alt="drawing" width="700"/>
+
+### History
+<img src="./ss/history.png" alt="drawing" width="700"/>
+
+### Users
+<img src="./ss/users.png" alt="drawing" width="700"/>
+
+### Basekt
+<img src="./ss/basket.png" alt="drawing" width="700"/>
